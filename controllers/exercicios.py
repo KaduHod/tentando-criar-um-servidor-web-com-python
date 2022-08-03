@@ -1,20 +1,28 @@
+import json
+
 class controller : 
     def __init__(self):
         teste = "teste"
         
     def index():
-        #open index
-        file = open("../views/index.html",'r')
+        file = open("./views/index.html",'r')
         lines = file.readlines()
         content = ""
         for line in lines :
             content += line
         return content       
     
-    def listMucles():
+    def list():
         #open exercicio-list
-        return 1
+        file = open("./exercicios.json")
+        jsonFile = json.load(file)
+        
+        
+        for exercicse in jsonFile :
+            print(exercicse)
+        
+        return jsonFile
     
-    def createMuscle():
+    def create():
         #open exercicio-create
         return 1

@@ -1,6 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from unicodedata import name
-from controlers import exercicios
+from controllers import exercicios
 from util import path, controllers
 import openHTML
 import time
@@ -14,22 +14,24 @@ serverConfig = {
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'text/html')
-        self.end_headers()
-        pathSplit = path.handlePath(self.path)
-        controllers(pathSplit['controller'], pathSplit['method'])
-        
-        self.wfile.write(openHTML.returnHTML("./views/index.html").encode())
-    
+        self.handleRequest('GET')
+       
     def do_POST(self):
+        self.handleRequest('POST')
+
+    def handleRequest(self, METHOD):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
-        pathSplit = path.handlePath(self.path)
-        controllers(pathSplit['controller'], pathSplit['method'])
         
-        self.wfile.write(openHTML.returnHTML("./views/exercicio-list.html").encode())
+        pathSplit = path.handlePath(self.path)
+        file = controllers.handle(
+                pathSplit['controller'], 
+                pathSplit[  'method'  ], 
+                pathSplit[ 'argument' ]
+            )
+
+        # self.wfile.write(file.encode())
 
 
 
