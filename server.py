@@ -1,8 +1,11 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from unicodedata import name
+from controlers import exercicios
+from util import path, controllers
 import openHTML
 import time
 import json
+
 
 serverConfig = {
     "PORT" : 8000,
@@ -14,19 +17,21 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
-        full_url = f"http://127.0.0.1:{self.server.server_port}{self.path}"
-        print(full_url)
+        pathSplit = path.handlePath(self.path)
+        controllers(pathSplit['controller'], pathSplit['method'])
         
-        self.wfile.write(openHTML.returnHTML("./get.html").encode())
+        self.wfile.write(openHTML.returnHTML("./views/index.html").encode())
     
     def do_POST(self):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
-        full_url = f"http://127.0.0.1:{self.server.server_port}{self.path}"
-        print(full_url)
+        pathSplit = path.handlePath(self.path)
+        controllers(pathSplit['controller'], pathSplit['method'])
         
-        self.wfile.write(openHTML.returnHTML("./post.html").encode())
+        self.wfile.write(openHTML.returnHTML("./views/exercicio-list.html").encode())
+
+
 
 def main():
     PORT = serverConfig['PORT']
