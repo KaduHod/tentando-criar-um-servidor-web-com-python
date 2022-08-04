@@ -26,7 +26,3 @@ class controller :
             content += line
         content = content.replace("<change>",tabelaExercicios)
         return content
-            
-    def create():
-        #open exercicio-create
-        return 1
