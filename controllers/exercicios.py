@@ -18,11 +18,23 @@ class controller :
         jsonFile = json.load(file)
         
         
-        for exercicse in jsonFile :
-            print(exercicse)
+        tabelaExercicios ="" 
+        for exercicio in jsonFile : 
+            newLine = f"<tr><td>{exercicio['nome']}</td><td>{exercicio['descricao']}</td></tr>"
+            tabelaExercicios += newLine
+            
+                    
+        view = open('./views/exercise-list.html')
+        lines = view.readlines()
         
-        return jsonFile
-    
+        content = ""
+        for line in lines:
+            content += line
+        
+        content = content.replace("<change>",tabelaExercicios)
+                
+        return content
+            
     def create():
         #open exercicio-create
         return 1

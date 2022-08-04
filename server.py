@@ -25,20 +25,21 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         
         pathSplit = path.handlePath(self.path)
+        
         file = controllers.handle(
-                pathSplit['controller'], 
-                pathSplit[  'method'  ], 
-                pathSplit[ 'argument' ]
-            )
-
-        # self.wfile.write(file.encode())
+            pathSplit["controller"],
+            pathSplit["method"],
+            pathSplit["argument"]
+        )
+        
+        self.wfile.write(file.encode())
 
 
 
 def main():
     PORT = serverConfig['PORT']
     server = HTTPServer(('localhost', PORT), Handler)
-    print(f"Server running on port {PORT}")
+    print(f"Server running on localhost:{PORT}")
     server.serve_forever()
     
 if __name__ == '__main__':
